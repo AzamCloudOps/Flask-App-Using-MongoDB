@@ -1,0 +1,19 @@
+# Python and Flask
+__pycache__/
+*.py[cod]
+*.log
+
+# Virtual environments
+venv/
+env/
+
+# Environment variables (if you use .env for secrets)
+.env
+
+# VS Code settings (optional)
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+.app.py.swo
