@@ -3,8 +3,6 @@ from pymongo import MongoClient
 import json
 from datetime import datetime
 import os
-import uuid
-import hashlib
 
 # ✅ Initialize Flask with correct template folder path
 app = Flask(__name__, template_folder='../frontend/templates')
@@ -57,36 +55,6 @@ def form():
 @app.route('/success')
 def success():
     return render_template('success.html')
-
-# ✅ To-Do form display
-@app.route('/todo')
-def todo():
-    return render_template('todo.html')
-
-# ✅ To-Do form submission route
-@app.route('/submittodoitem', methods=['POST'])
-def submit_todo():
-    try:
-        itemName = request.form['itemName']
-        itemDescription = request.form['itemDescription']
-
-        # Optional extra fields (added for assignment commit structure)
-        itemID = request.form.get('itemID', str(uuid.uuid4().int)[:6])
-        itemUUID = request.form.get('itemUUID', str(uuid.uuid4()))
-        itemHash = request.form.get('itemHash', hashlib.sha256(itemName.encode()).hexdigest())
-
-        db['todo_collection'].insert_one({
-            "itemName": itemName,
-            "itemDescription": itemDescription,
-            "itemID": itemID,
-            "itemUUID": itemUUID,
-            "itemHash": itemHash,
-            "timestamp": datetime.utcnow()
-        })
-
-        return "To-Do Item Submitted Successfully!"
-    except Exception as e:
-        return f"Error: {str(e)}"
 
 # ✅ Run the Flask server
 if __name__ == '__main__':
